@@ -20,6 +20,7 @@
   "homepage": "https://github.com/MagicEnvision/StockScraper#readme",
   "dependencies": {
     "axios": "^1.14.0",
+    "dotenv": "^17.4.0",
     "express": "^5.2.1"
   }
 }
