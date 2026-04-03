@@ -13,8 +13,9 @@ const GET_NEWS_AND_EVENTS_QUERY = `query getNewsAndEvents($symbol: String!, $pag
 //query: query getNewsAndEvents($symbol: String!, $page: Int!, $limit: Int!, $locale: String!, $companyInNews: Boolean) {  news: getNewsForSymbol(    symbol: $symbol    page: $page    limit: $limit    locale: $locale    companyInNews: $companyInNews  ) {    headline    datetime    source    newsid    summary    __typename  }  events: getUpComingEventsForSymbol(symbol: $symbol, locale: $locale) {    title    date    status    type    __typename  }}
 // vars = {companyInNews: false, limit: 10, locale: "en", page: 1, symbol: "QIMC"}
 
-app.post('/', (req, res) => {
-
+app.post('/:symbol', (req, res) => {
+  const symbol = req.params.symbol;
+  console.log(`Received request for symbol: ${symbol}`);
   axios({
     method: 'post',
     allowAbsoluteUrls: false,
@@ -29,7 +30,7 @@ app.post('/', (req, res) => {
             limit: 10,
             locale: "en",
             page: 1,
-            symbol: "QIMC:CNX"
+            symbol: symbol
         }
     }  
 })
