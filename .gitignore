@@ -1,0 +1,18 @@
+# API Keys & Secrets
+.env
+.env.local
+.env.production
+.env.development
+
+# Dependencies
+node_modules/
+jspm_packages/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Operating System Files
+.DS_Store
+Thumbs.db
