@@ -26,7 +26,8 @@ app.post('/:symbol', (req, res) => {
         query: process.env.GET_NEWS_AND_EVENTS_QUERY,
         variables: {
             companyInNews: false,
-            limit: 10,
+            //grabs first 10 news articles
+            limit: 15,
             locale: "en",
             page: 1,
             symbol: userInput
@@ -41,14 +42,14 @@ app.post('/:symbol', (req, res) => {
     if (!newsData || newsData.length === 0) {
         res.status(404).json({ error: 'No news data found' });
     }
+    res.status(200).send(newsData)
+
     
 
 })
 .catch((err) => {
     console.error("Axios error:", err.message);
-});
-
-})
+});})
 
 
 
