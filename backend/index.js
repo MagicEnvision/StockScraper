@@ -1,5 +1,6 @@
 const axios = require('axios');
 const express = require('express');
+const  {Resend} = require('resend');
 require('dotenv').config()
 const app = express();
 const port = 8080;
@@ -11,6 +12,9 @@ const port = 8080;
 // http://localhost:8081/qimc:cnx
 //query: query getNewsAndEvents($symbol: String!, $page: Int!, $limit: Int!, $locale: String!, $companyInNews: Boolean) {  news: getNewsForSymbol(    symbol: $symbol    page: $page    limit: $limit    locale: $locale    companyInNews: $companyInNews  ) {    headline    datetime    source    newsid    summary    __typename  }  events: getUpComingEventsForSymbol(symbol: $symbol, locale: $locale) {    title    date    status    type    __typename  }}
 // vars = {companyInNews: false, limit: 10, locale: "en", page: 1, symbol: "QIMC"}
+
+
+
 
 app.post('/:symbol', (req, res) => {
   const userInput = req.params.symbol;
@@ -33,6 +37,7 @@ app.post('/:symbol', (req, res) => {
             symbol: userInput
         }
     }  
+    
 })
 .then((response) => {
     const newsData = response.data.data.news;
@@ -42,6 +47,13 @@ app.post('/:symbol', (req, res) => {
     if (!newsData || newsData.length === 0) {
         res.status(404).json({ error: 'No news data found' });
     }
+    const resend = new Resend(process.env.RESEND_API)
+    resend.emails.send({
+  from: 'onboarding@resend.dev',
+  to: 'rjrose2003@gmail.com',
+  subject: 'Hello World',
+  html: '<p>Congrats on sending your <strong>first email</strong>!</p>'
+});
     res.status(200).send(newsData)
 
     
@@ -49,7 +61,8 @@ app.post('/:symbol', (req, res) => {
 })
 .catch((err) => {
     console.error("Axios error:", err.message);
-});})
+});
+})
 
 
 
